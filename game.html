@@ -99,7 +99,7 @@
     <select id="level">
       <option value="easy">Easy (3 pairs)</option>
       <option value="medium" selected>Medium (6 pairs)</option>
-      <option value="hard">Hard (9 pairs)</option>
+      <option value="hard">Hard (10 pairs)</option>
     </select>
 
     <label for="theme">Theme:</label>
@@ -119,9 +119,9 @@
 
   <script>
     const themes = {
-      fruits: ['🍎', '🍌', '🍇', '🍒', '🍍', '🥝', '🍊', '🍉', '🍓'],
-      animals: ['🐶', '🐱', '🦊', '🐸', '🐵', '🐼', '🐯', '🦁', '🐷'],
-      shapes: ['🔺', '🔵', '🟢', '🟣', '🟡', '⬛', '⬜', '🔶', '🔷']
+      fruits: ['🍎', '🍌', '🍇', '🍒', '🍍', '🥝', '🍊', '🍉', '🍓', '🍈'],
+      animals: ['🐶', '🐱', '🦊', '🐸', '🐵', '🐼', '🐯', '🦁', '🐷', '🐨'],
+      shapes: ['🔺', '🔵', '🟢', '🟣', '🟡', '⬛', '⬜', '🔶', '🔷', '🔳']
     };
 
     let cards = [];
@@ -140,7 +140,7 @@
 
     function getPairsForLevel(level) {
       if (level === 'easy') return 3;
-      if (level === 'hard') return 9;
+      if (level === 'hard') return 10;
       return 6;
     }
 
