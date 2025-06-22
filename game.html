@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emoji Flip Game</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: #00e676;
+    }
+    #controls {
+      margin-bottom: 20px;
+    }
+    select, button {
+      padding: 10px;
+      margin: 0 5px;
+      font-size: 1em;
+      border-radius: 8px;
+      border: none;
+    }
+    select {
+      background-color: #222;
+      color: #fff;
+    }
+    button {
+      background-color: #00e676;
+      color: #111;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00c853;
+    }
+    #moves {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+    #game-board {
+      display: grid;
+      gap: 15px;
+      justify-content: center;
+    }
+    .card {
+      width: 80px;
+      height: 80px;
+      background-color: #fff;
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      cursor: pointer;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 255, 128, 0.5);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    #win-message {
+      margin-top: 20px;
+      font-size: 1.5em;
+      color: #00e676;
+    }
+    #reset-button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      background-color: #00e676;
+      color: #111;
+      cursor: pointer;
+    }
+    #reset-button:hover {
+      background-color: #00c853;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 Emoji Flip 🎮</h1>
+
+  <div id="controls">
+    <label for="level">Level:</label>
+    <select id="level">
+      <option value="easy">Easy (3 pairs)</option>
+      <option value="medium" selected>Medium (6 pairs)</option>
+      <option value="hard">Hard (9 pairs)</option>
+    </select>
+
+    <label for="theme">Theme:</label>
+    <select id="theme">
+      <option value="fruits" selected>Fruits</option>
+      <option value="animals">Animals</option>
+      <option value="shapes">Shapes</option>
+    </select>
+
+    <button onclick="resetGame()">Start Game</button>
+  </div>
+
+  <div id="moves">Moves: 0</div>
+  <div id="game-board"></div>
+  <div id="win-message"></div>
+  <button id="reset-button" onclick="resetGame()">Play Again</button>
+
+  <script>
+    const themes = {
+      fruits: ['🍎', '🍌', '🍇', '🍒', '🍍', '🥝', '🍊', '🍉', '🍓'],
+      animals: ['🐶', '🐱', '🦊', '🐸', '🐵', '🐼', '🐯', '🦁', '🐷'],
+      shapes: ['🔺', '🔵', '🟢', '🟣', '🟡', '⬛', '⬜', '🔶', '🔷']
+    };
+
+    let cards = [];
+    let flipped = [];
+    let matched = [];
+    let moves = 0;
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function getPairsForLevel(level) {
+      if (level === 'easy') return 3;
+      if (level === 'hard') return 9;
+      return 6;
+    }
+
+    function setupBoard() {
+      const board = document.getElementById('game-board');
+      board.innerHTML = '';
+
+      const columns = Math.ceil(Math.sqrt(cards.length));
+      board.style.gridTemplateColumns = `repeat(${columns}, 80px)`;
+
+      cards.forEach((emoji, index) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.textContent = '❓';
+        card.addEventListener('click', () => handleCardClick(card, index));
+        board.appendChild(card);
+      });
+    }
+
+    function handleCardClick(cardElement, index) {
+      if (flipped.includes(index) || matched.includes(index) || flipped.length === 2) return;
+
+      cardElement.textContent = cards[index];
+      flipped.push(index);
+
+      if (flipped.length === 2) {
+        moves++;
+        document.getElementById('moves').textContent = `Moves: ${moves}`;
+        const [first, second] = flipped;
+        if (cards[first] === cards[second]) {
+          matched.push(first, second);
+          flipped = [];
+          if (matched.length === cards.length) {
+            document.getElementById('win-message').textContent = `🎉 You won in ${moves} moves! 🎉`;
+          }
+        } else {
+          setTimeout(() => {
+            const board = document.getElementById('game-board');
+            board.children[first].textContent = '❓';
+            board.children[second].textContent = '❓';
+            flipped = [];
+          }, 1000);
+        }
+      }
+    }
+
+    function resetGame() {
+      const level = document.getElementById('level').value;
+      const theme = document.getElementById('theme').value;
+
+      const pairsCount = getPairsForLevel(level);
+      const symbols = themes[theme].slice(0, pairsCount);
+      cards = shuffle([...symbols, ...symbols]);
+
+      flipped = [];
+      matched = [];
+      moves = 0;
+      document.getElementById('moves').textContent = 'Moves: 0';
+      document.getElementById('win-message').textContent = '';
+      setupBoard();
+    }
+
+    resetGame();
+  </script>
+</body>
+</html>
