@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Rock Buddy</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
+    .container { max-width: 700px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h1 { text-align: center; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 8px 0; border-bottom: 1px solid #ddd; }
+    input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
+    .button { width: 100%; padding: 12px; background: #333; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    .button:hover { background: #555; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Checkout</h1>
+    <h3>Your Cart</h3>
+    <ul id="cartItems"></ul>
+
+    <h3>Enter Your Information</h3>
+    <input id="nameInput" type="text" placeholder="Full Name" required />
+    <input id="emailInput" type="email" placeholder="Email Address" required />
+    <input id="cardInput" type="text" placeholder="Card Number" required />
+
+    <button class="button" onclick="submitCheckout()">Complete Purchase</button>
+  </div>
+
+  <script>
+    const cartItems = JSON.parse(localStorage.getItem('rockCart')) || [];
+    const list = document.getElementById('cartItems');
+
+    if (cartItems.length === 0) {
+      list.innerHTML = '<li>Your cart is empty.</li>';
+    } else {
+      list.innerHTML = cartItems.map(item => `<li>${item.name} - ${item.type}, ${item.size}, ${item.color}, ${item.personality}</li>`).join('');
+    }
+
+    function submitCheckout() {
+      const name = document.getElementById('nameInput').value;
+      const email = document.getElementById('emailInput').value;
+      const card = document.getElementById('cardInput').value;
+
+      if (!name || !email || !card) {
+        alert("Please fill out all fields.");
+        return;
+      }
+
+      alert(`Thank you, ${name}! Your rock(s) will be shipped to ${email}.`);
+      localStorage.removeItem('rockCart');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
