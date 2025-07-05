@@ -13,6 +13,7 @@
     input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
     .button { width: 100%; padding: 12px; background: #333; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
     .button:hover { background: #555; }
+    .total { font-weight: bold; margin-top: 10px; font-size: 1.1em; }
   </style>
 </head>
 <body>
@@ -20,6 +21,7 @@
     <h1>Checkout</h1>
     <h3>Your Cart</h3>
     <ul id="cartItems"></ul>
+    <p id="totalAmount" class="total"></p>
 
     <h3>Enter Your Information</h3>
     <input id="nameInput" type="text" placeholder="Full Name" required />
@@ -27,16 +29,29 @@
     <input id="cardInput" type="text" placeholder="Card Number" required />
 
     <button class="button" onclick="submitCheckout()">Complete Purchase</button>
+    <button class="button" style="margin-top: 10px; background-color: #aa0000;" onclick="clearCart()">Clear Cart</button>
+
+    <p style="text-align: center; margin-top: 20px;">
+      <a href="retail.html" style="color: #007bff; font-weight: bold;">← Back to Store</a>
+    </p>
   </div>
 
   <script>
-    const cartItems = JSON.parse(localStorage.getItem('rockCart')) || [];
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
     const list = document.getElementById('cartItems');
+    const totalDisplay = document.getElementById('totalAmount');
+    const rockPrice = 20;
 
     if (cartItems.length === 0) {
       list.innerHTML = '<li>Your cart is empty.</li>';
+      totalDisplay.textContent = '';
     } else {
-      list.innerHTML = cartItems.map(item => `<li>${item.name} - ${item.type}, ${item.size}, ${item.color}, ${item.personality}</li>`).join('');
+      list.innerHTML = cartItems.map(item => 
+        `<li>${item.name} - ${item.type}, ${item.size}, ${item.color}, ${item.personality} ($${rockPrice})</li>`
+      ).join('');
+
+      const total = cartItems.length * rockPrice;
+      totalDisplay.textContent = `Total: $${total}`;
     }
 
     function submitCheckout() {
@@ -50,8 +65,15 @@
       }
 
       alert(`Thank you, ${name}! Your rock(s) will be shipped to ${email}.`);
-      localStorage.removeItem('rockCart');
+      localStorage.removeItem('cart');
       window.location.href = 'index.html';
+    }
+
+    function clearCart() {
+      if (confirm("Are you sure you want to clear your cart?")) {
+        localStorage.removeItem('cart');
+        location.reload();
+      }
     }
   </script>
 </body>

@@ -1,134 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rock Buddy - Retail</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My UX Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Rock Buddy Store</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="retail.html" class="active">Retail</a>
-      <a href="checkout.html">Checkout</a>
-    </nav>
+
+  <header class="bg-dark text-white text-center p-4">
+    <h1>Liam Madgett</h1>
+    <p>Aspiring UX Designer | SEG3125</p>
   </header>
 
-  <section class="filters">
-    <label for="typeFilter">Type:</label>
-    <select id="typeFilter" onchange="applyFilters()">
-      <option value="">All</option>
-      <option value="Granite">Granite</option>
-      <option value="Marble">Marble</option>
-      <option value="Quartz">Quartz</option>
-      <option value="Sandstone">Sandstone</option>
-      <option value="Slate">Slate</option>
-    </select>
-
-    <label for="sizeFilter">Size:</label>
-    <select id="sizeFilter" onchange="applyFilters()">
-      <option value="">All</option>
-      <option value="Large">Large</option>
-      <option value="Medium">Medium</option>
-      <option value="Small">Small</option>
-      <option value="Flat">Flat</option>
-    </select>
-
-    <label for="colorFilter">Color:</label>
-    <select id="colorFilter" onchange="applyFilters()">
-      <option value="">All</option>
-      <option value="Gray">Gray</option>
-      <option value="White">White</option>
-      <option value="Clear">Clear</option>
-      <option value="Tan">Tan</option>
-      <option value="Dark Gray">Dark Gray</option>
-    </select>
+  <section class="container mt-5">
+    <h2>About Me</h2>
+    <p>Hi! My name is Liam Madgett. I recently completed my third year of Software Engineering at the uOttawa. 
+       I’ve previously worked as a co-op student in the field of embedded software, where I focused on low level system programming 
+       and hardware interaction. Now, I’m excited to explore the world of UI design, as it offers a more user-facing perspective, allowing 
+       me to create experiences that directly impact how people interact with tech.</p>
   </section>
 
-  <main>
-    <section class="product-list">
+  <section class="container mt-5">
+    <h2>How I Work</h2>
+    <p>
+      I'm currently learning about user interface design principles through 
+      SEG3125 "Designing User Interfaces" at uOttawa. 
+      As part of this course, I'm gaining hands on experience with HTML, CSS, JavaScript, 
+      and Bootstrap, while also exploring key design concepts like visual hierarchy, balance, 
+      contrast, and user-centered design.
+    </p>
+    <p>
+      You can find the course materials here: 
+      <a href="https://uottawa.brightspace.com/d2l/le/content/510662/Home" target="_blank">
+        SEG3125 Brightspace Course Page
+      </a>.
+    </p>
+    <p>
+      This portfolio will serve as a space to showcase the designs I build throughout the semester 
+      and reflect my growth as a UI designer.
+    </p>
+  </section>
+  
 
-      <div class="product-card">
-        <h3>Granite Greg</h3>
-        <img src="images/granitegreg.png" alt="Granite Greg" />
-        <p><strong>Type:</strong> Granite</p>
-        <p><strong>Size:</strong> Large</p>
-        <p><strong>Color:</strong> Gray</p>
-        <p><strong>Personality:</strong> Chill</p>
-        <button onclick="addToCart('Granite Greg')">Add to Cart</button>
+  <section class="container mt-5">
+    <h2>Design Case Studies</h2>
+    <div class="row">
+      <!-- Placeholder thumbnails -->
+      <div class="col-md-3">
+        <img src="https://placeholder.com/150" class="img-fluid" alt="Design 1">
+        <p><a href="buisness.html" target="_blank">Design 1: Service Site : Pet Rock Pros</a></p>      </div>
+      <div class="col-md-3">
+        <img src="https://placeholder.com/150" class="img-fluid" alt="Design 2">
+        <p><a href="game.html">Design 2: Small Memeory Game</a></p>
       </div>
-
-      <div class="product-card">
-        <h3>Marble Molly</h3>
-        <img src="images/marblemolly.png" alt="Marble Molly" />
-        <p><strong>Type:</strong> Marble</p>
-        <p><strong>Size:</strong> Medium</p>
-        <p><strong>Color:</strong> White</p>
-        <p><strong>Personality:</strong> Friendly</p>
-        <button onclick="addToCart('Marble Molly')">Add to Cart</button>
+      <div class="col-md-3">
+        <img src="https://placeholder.com/150" class="img-fluid" alt="Design 3">
+        <p><a href="retail.html">Design 3: E-commerce</a></p>
       </div>
-
-      <div class="product-card">
-        <h3>Quartz Quinn</h3>
-        <img src="images/captainquartz.png" alt="Quartz Quinn" />
-        <p><strong>Type:</strong> Quartz</p>
-        <p><strong>Size:</strong> Medium</p>
-        <p><strong>Color:</strong> Clear</p>
-        <p><strong>Personality:</strong> Energetic</p>
-        <button onclick="addToCart('Quartz Quinn')">Add to Cart</button>
+      <div class="col-md-3">
+        <img src="https://placeholder.com/150" class="img-fluid" alt="Design 4">
+        <p><a href="#">Design 4: Analytics Site (Coming Soon)</a></p>
       </div>
+    </div>
+  </section>
 
-      <div class="product-card">
-        <h3>Sandy Sam</h3>
-        <img src="images/sandysam.png" alt="Sandy Sam" />
-        <p><strong>Type:</strong> Sandstone</p>
-        <p><strong>Size:</strong> Small</p>
-        <p><strong>Color:</strong> Tan</p>
-        <p><strong>Personality:</strong> Laid-back</p>
-        <button onclick="addToCart('Sandy Sam')">Add to Cart</button>
-      </div>
-
-      <div class="product-card">
-        <h3>Slate Sally</h3>
-        <img src="images/slatesally.png" alt="Slate Sally" />
-        <p><strong>Type:</strong> Slate</p>
-        <p><strong>Size:</strong> Flat</p>
-        <p><strong>Color:</strong> Dark Gray</p>
-        <p><strong>Personality:</strong> Cool</p>
-        <button onclick="addToCart('Slate Sally')">Add to Cart</button>
-      </div>
-
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Rock Buddy. All rights reserved.</p>
+  <footer class="bg-light text-center mt-5 p-3">
+    <p>© 2025 Liam Madgett</p>
   </footer>
 
-  <script>
-    function addToCart(productName) {
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cart.push(productName);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      alert(productName + ' has been added to your cart!');
-    }
-
-    function applyFilters() {
-      const type = document.getElementById('typeFilter').value.toLowerCase();
-      const size = document.getElementById('sizeFilter').value.toLowerCase();
-      const color = document.getElementById('colorFilter').value.toLowerCase();
-      const cards = document.querySelectorAll('.product-card');
-
-      cards.forEach(card => {
-        const cardText = card.textContent.toLowerCase();
-        const typeMatch = cardText.includes(type);
-        const sizeMatch = cardText.includes(size);
-        const colorMatch = cardText.includes(color);
-        card.style.display = (typeMatch && sizeMatch && colorMatch) ? '' : 'none';
-      });
-    }
-  </script>
 </body>
 </html>

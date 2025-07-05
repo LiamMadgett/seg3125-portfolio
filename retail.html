@@ -57,6 +57,7 @@
         <p><strong>Size:</strong> Large</p>
         <p><strong>Color:</strong> Gray</p>
         <p><strong>Personality:</strong> Chill</p>
+        <p><strong>Price:</strong> $20</p>
         <button onclick="addToCart('Granite Greg')">Add to Cart</button>
       </div>
 
@@ -67,6 +68,7 @@
         <p><strong>Size:</strong> Medium</p>
         <p><strong>Color:</strong> White</p>
         <p><strong>Personality:</strong> Friendly</p>
+        <p><strong>Price:</strong> $20</p>
         <button onclick="addToCart('Marble Molly')">Add to Cart</button>
       </div>
 
@@ -77,6 +79,7 @@
         <p><strong>Size:</strong> Medium</p>
         <p><strong>Color:</strong> Clear</p>
         <p><strong>Personality:</strong> Energetic</p>
+        <p><strong>Price:</strong> $20</p>
         <button onclick="addToCart('Quartz Quinn')">Add to Cart</button>
       </div>
 
@@ -87,6 +90,7 @@
         <p><strong>Size:</strong> Small</p>
         <p><strong>Color:</strong> Tan</p>
         <p><strong>Personality:</strong> Laid-back</p>
+        <p><strong>Price:</strong> $20</p>
         <button onclick="addToCart('Sandy Sam')">Add to Cart</button>
       </div>
 
@@ -97,6 +101,7 @@
         <p><strong>Size:</strong> Flat</p>
         <p><strong>Color:</strong> Dark Gray</p>
         <p><strong>Personality:</strong> Cool</p>
+        <p><strong>Price:</strong> $20</p>
         <button onclick="addToCart('Slate Sally')">Add to Cart</button>
       </div>
 
@@ -109,8 +114,21 @@
 
   <script>
     function addToCart(productName) {
+      const card = Array.from(document.querySelectorAll('.product-card')).find(c => 
+        c.querySelector('h3').textContent === productName
+      );
+
+      const product = {
+        name: productName,
+        type: card.querySelector('p:nth-of-type(1)').textContent.split(': ')[1],
+        size: card.querySelector('p:nth-of-type(2)').textContent.split(': ')[1],
+        color: card.querySelector('p:nth-of-type(3)').textContent.split(': ')[1],
+        personality: card.querySelector('p:nth-of-type(4)').textContent.split(': ')[1],
+        price: 20
+      };
+
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cart.push(productName);
+      cart.push(product);
       localStorage.setItem('cart', JSON.stringify(cart));
       alert(productName + ' has been added to your cart!');
     }
