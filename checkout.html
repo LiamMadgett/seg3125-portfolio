@@ -10,10 +10,11 @@
     h1 { text-align: center; }
     ul { list-style: none; padding: 0; }
     li { padding: 8px 0; border-bottom: 1px solid #ddd; }
-    input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
+    input, select { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
     .button { width: 100%; padding: 12px; background: #333; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
     .button:hover { background: #555; }
     .total { font-weight: bold; margin-top: 10px; font-size: 1.1em; }
+    #surveySection { display: none; margin-top: 20px; }
   </style>
 </head>
 <body>
@@ -28,8 +29,22 @@
     <input id="emailInput" type="email" placeholder="Email Address" required />
     <input id="cardInput" type="text" placeholder="Card Number" required />
 
-    <button class="button" onclick="submitCheckout()">Complete Purchase</button>
+    <button class="button" onclick="showSurvey()">Complete Purchase</button>
     <button class="button" style="margin-top: 10px; background-color: #aa0000;" onclick="clearCart()">Clear Cart</button>
+
+    <div id="surveySection">
+      <h3>Shopping Satisfaction Survey</h3>
+      <label for="satisfaction">How satisfied are you with your shopping experience? (1 = Not satisfied, 5 = Very satisfied)</label>
+      <select id="satisfaction" required>
+        <option value="" disabled selected>Select a rating</option>
+        <option value="1">1 - Not satisfied</option>
+        <option value="2">2</option>
+        <option value="3">3 - Neutral</option>
+        <option value="4">4</option>
+        <option value="5">5 - Very satisfied</option>
+      </select>
+      <button class="button" onclick="submitFinal()">Submit Feedback & Finish</button>
+    </div>
 
     <p style="text-align: center; margin-top: 20px;">
       <a href="retail.html" style="color: #007bff; font-weight: bold;">← Back to Store</a>
@@ -49,12 +64,11 @@
       list.innerHTML = cartItems.map(item => 
         `<li>${item.name} - ${item.type}, ${item.size}, ${item.color}, ${item.personality} ($${rockPrice})</li>`
       ).join('');
-
       const total = cartItems.length * rockPrice;
       totalDisplay.textContent = `Total: $${total}`;
     }
 
-    function submitCheckout() {
+    function showSurvey() {
       const name = document.getElementById('nameInput').value;
       const email = document.getElementById('emailInput').value;
       const card = document.getElementById('cardInput').value;
@@ -64,7 +78,23 @@
         return;
       }
 
-      alert(`Thank you, ${name}! Your rock(s) will be shipped to ${email}.`);
+      // Show survey section
+      document.getElementById('surveySection').style.display = 'block';
+      // Scroll to survey
+      document.getElementById('surveySection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function submitFinal() {
+      const satisfaction = document.getElementById('satisfaction').value;
+      const name = document.getElementById('nameInput').value;
+      const email = document.getElementById('emailInput').value;
+
+      if (!satisfaction) {
+        alert("Please select a satisfaction rating.");
+        return;
+      }
+
+      alert(`Thank you, ${name}! Your rock(s) will be shipped to ${email}.\nYour satisfaction rating: ${satisfaction}`);
       localStorage.removeItem('cart');
       window.location.href = 'index.html';
     }
